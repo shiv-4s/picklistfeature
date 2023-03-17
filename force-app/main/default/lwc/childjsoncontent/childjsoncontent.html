@@ -1,0 +1,14 @@
+<template>
+    <template if:true={isString}>
+        <lightning-input type="text" class={clsName} onfocusout={handleOptionValue} value={selectedValue} label="Enter some text"></lightning-input>
+
+    </template>
+    <template if:true={isPickList}>
+        <lightning-combobox  
+        class={clsName}
+        onchange={handleOptionValue}  
+        options={newOptions}
+        value={selectedValue}>
+        </lightning-combobox> <br>
+    </template>
+</template>

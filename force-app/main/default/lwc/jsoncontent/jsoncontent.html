@@ -1,0 +1,28 @@
+<template>
+    <lightning-card>
+        <div class="slds-var-m-around_medium slds-p-top_small" >
+            <template for:each={jsonValue.fields.columns} for:item="fld" >
+                {fld.Name} 
+                <c-childjsoncontent
+                field-name={fld.Name} 
+                field-type={fld.FieldType}
+                json-value={jsonValue} 
+                key={fld.Name} 
+                onselectedjsonvalue={handleSelectValue}
+                selected-authority={selectedAuthority}
+                consession-type-value={consessionTypeValue}
+                crn-type-value={crnTypeValue}
+                is-checked-next={isCheckedNext}
+                >
+                </c-childjsoncontent>
+            </template> <br>
+            <lightning-modal-footer>
+                <lightning-button class="slds-var-p-left_xx-small"
+                variant="brand-outline"
+                label="Next"
+                onclick={goToNext}
+                ></lightning-button>
+            </lightning-modal-footer>
+        </div>
+    </lightning-card>
+</template>
