@@ -1,0 +1,10 @@
+<template>
+    <lightning-card>
+    <template if:true={valueFromChild}>
+        <c-componentb child-c={valueFromChild}>
+        </c-componentb>
+    </template>
+        <c-componentc oncallparent={getChildValue}>  
+        </c-componentc>
+    </lightning-card>
+</template>
