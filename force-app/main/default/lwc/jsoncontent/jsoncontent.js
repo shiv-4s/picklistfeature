@@ -1,31 +1,33 @@
-import { api, LightningElement } from 'lwc';
+import { api, LightningElement, track } from 'lwc';
 import jsonresource from '@salesforce/resourceUrl/jsonresource';
 
 export default class Jsoncontent extends LightningElement {
 
+    isModalOpen = false;
     jsonValue;
-    
     selectedAuthority;
     consessionTypeValue;
     crnTypeValue;
     isCheckedNext = false;
- 
+    isValidate = false;
+    isModalOpen = false;
+
     connectedCallback(){ 
         this.getLabel(); 
     }
+    closeModal() {
+        this.isModalOpen = false;
+    }
 
     getLabel(){
-
         var request = new XMLHttpRequest();
         request.open("GET", jsonresource, false);
         request.send();
         this.jsonValue = JSON.parse(request.responseText,this.jsonValue);
-
     }
 
 
     handleSelectValue(event){
-
        let selectedValue = event.detail;
         if(selectedValue.fieldLabel === 'Concession Authority'){
             this.selectedAuthority = selectedValue.fieldValue;
@@ -47,16 +49,17 @@ export default class Jsoncontent extends LightningElement {
         else if(selectedValue.fieldLabel === 'CRN Number'){
             this.crnTypeValue = selectedValue.fieldValue;
             console.log("+++parentcrnTypeValuevalue+++ ", this.crnTypeValue);
-           
         }
-
     }
 
    
     goToNext(){
-      this.isCheckedNext = true;
+        this.isCheckedNext = true;
         this.template.querySelectorAll('c-childjsoncontent').forEach(element => {
-            element.handleValidation(this.selectedAuthority, this.consessionTypeValue, this.crnTypeValue);
+            if(element.handleValidation(this.selectedAuthority, this.consessionTypeValue, this.crnTypeValue)){
+                this.isValidate = true;
+                this.isModalOpen = true;
+            }
         });
         
     }
